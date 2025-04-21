@@ -42,3 +42,4 @@ const SyncUser = async () => {
 };
 
 export default SyncUser;
+// sync-user route act as middle where when we login it force to go /sync-user for storing hte user in the database after store it it return the /dashboard route
