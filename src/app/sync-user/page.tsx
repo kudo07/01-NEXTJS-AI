@@ -13,23 +13,31 @@ const SyncUser = async () => {
   if (!user.emailAddresses[0]?.emailAddress) {
     return notFound();
   }
-  await db.user.upsert({
-    where: {
-      emailAddress: user.emailAddresses[0]?.emailAddress ?? "",
-    },
-    update: {
-      imageUrl: user.imageUrl,
-      firstName: user.firstName,
-      lastNmae: user.lastName,
-    },
-    create: {
-      id: userId,
-      emailAddress: user.emailAddresses[0]?.emailAddress ?? "",
-      imageUrl: user.imageUrl,
-      firstName: user.firstName,
-      lastNmae: user.lastName,
-    },
-  });
+  try {
+    console.log("here");
+
+    await db.user.upsert({
+      where: {
+        emailAddress: user.emailAddresses[0]?.emailAddress ?? "",
+      },
+      update: {
+        imageUrl: user.imageUrl,
+        firstName: user.firstName,
+        lastName: user.lastName,
+      },
+      create: {
+        id: userId,
+        emailAddress: user.emailAddresses[0]?.emailAddress ?? "",
+        imageUrl: user.imageUrl,
+        firstName: user.firstName,
+        lastName: user.lastName,
+      },
+    });
+  } catch (error) {
+    console.error("Error saving user to DB:", error);
+    throw error;
+  }
+
   return redirect("/dashboard");
 };
 
