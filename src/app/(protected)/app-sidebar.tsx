@@ -60,7 +60,9 @@ export function AppSidebar() {
       <SidebarHeader>
         <div className="flex items-center gap-2">
           {open && (
-            <h1 className="text-primary/80 text-xl font-bold">Dionysus</h1>
+            <h1 className="text-primary/80 ml-15 text-2xl font-bold text-orange-400">
+              GITCHAT
+            </h1>
           )}
         </div>
       </SidebarHeader>

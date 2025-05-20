@@ -12,10 +12,12 @@ const SidebarLayout = ({ children }: Props) => {
     <SidebarProvider>
       <AppSidebar />
       <main className="m-2 w-full">
-        <div className="border-sidebar-border bg-sidebar flex items-center gap-2 rounded-md border p-2 px-4 shadow">
+        <div className="border-sidebar-border bg-sidebar flex h-12 items-center justify-end gap-2 rounded-md border px-4 py-8 text-center align-middle shadow">
           {/* searchbar */}
-          <div className="ml-auto"></div>
-          <UserButton />
+          <div className="relative mr-10">
+            <div className="absolute inset-0 -m-3 cursor-pointer"></div>
+            <UserButton />
+          </div>
         </div>
         <div className="h-4"></div>
         {/* main content */}
