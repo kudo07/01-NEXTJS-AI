@@ -25,8 +25,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import useProject from "~/hooks/use-project";
 //
-const projects = [{ name: "Project 1" }, { name: "Project 2" }];
+// const projects = [{ name: "Project 1" }, { name: "Project 2" }];
 const items = [
   {
     title: "Dashboard",
@@ -51,6 +52,7 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const { projects, projectId, setProjectId } = useProject();
   const pathname = usePathname();
   const { open } = useSidebar();
   console.log(open);
@@ -102,10 +104,17 @@ export function AppSidebar() {
                 return (
                   <SidebarMenuItem key={project.name}>
                     <SidebarMenuButton asChild>
-                      <div>
+                      <div
+                        onClick={() => setProjectId(project.id)}
+                        className="cursor-pointer"
+                      >
                         <div
                           className={cn(
-                            "text-primary flex size-6 items-center justify-center rounded-sm border bg-orange-400 p-2 text-sm",
+                            "flex size-6 cursor-pointer items-center justify-center rounded-sm border p-2 text-sm",
+                            {
+                              "bg-orange-400 text-black":
+                                project.id === projectId,
+                            },
                           )}
                         >
                           {project.name[0]}
