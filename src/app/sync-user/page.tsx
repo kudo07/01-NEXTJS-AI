@@ -5,6 +5,8 @@ import { db } from "~/server/db";
 
 const SyncUser = async () => {
   const { userId } = await auth();
+  console.log(userId, "in the sync - user");
+
   if (!userId) {
     throw new Error("User not found");
   }
@@ -15,7 +17,6 @@ const SyncUser = async () => {
   }
   try {
     console.log("here");
-
     await db.user.upsert({
       where: {
         emailAddress: user.emailAddresses[0]?.emailAddress ?? "",
