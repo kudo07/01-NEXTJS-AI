@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { pollCommits } from "~/lib/github";
 
 // create
 export const projectRouter = createTRPCRouter({
@@ -21,6 +22,7 @@ export const projectRouter = createTRPCRouter({
           userToProjects: { create: { userId: ctx.user.userId! } },
         },
       });
+      await pollCommits(project.id);
       return project;
       // create.tsx
     }),

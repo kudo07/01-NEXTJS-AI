@@ -51,6 +51,7 @@ model Commit {
   commitHash         String
   commitAuthorName   String
   commitAuthorAvatar String
+  commitDate         DateTime
   // ai summary
   summary            String
 }
