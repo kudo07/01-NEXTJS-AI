@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "./node_modules/@prisma/client"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
@@ -27,6 +27,7 @@ model Project {
   githubUrl      String
   deletedAt      DateTime?
   userToProjects UserToProject[]
+  commits        Commit[]
 }
 
 model UserToProject {
@@ -39,4 +40,17 @@ model UserToProject {
   user      User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, projectId])
+}
+
+model Commit {
+  id                 String   @id @default(cuid())
+  createdAt          DateTime @default(now())
+  Project            Project? @relation(fields: [projectId], references: [id])
+  projectId          String?
+  commitMessage      String
+  commitHash         String
+  commitAuthorName   String
+  commitAuthorAvatar String
+  // ai summary
+  summary            String
 }
