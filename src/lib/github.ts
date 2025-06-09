@@ -2,7 +2,9 @@ import { Octokit } from "octokit";
 //
 import axios from "axios";
 import { db } from "~/server/db";
+
 import { aiSummariseCommit } from "./gemini";
+// CONNECT WITH GITHUB
 export const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 });
@@ -49,6 +51,7 @@ export const pollCommits = async (projectId: string) => {
     projectId,
     commitHashes,
   );
+  // after getting all the unprocessed commits then we move further and summarise from the ai fo r the unprocesed commits
   const summaryResponses = await Promise.allSettled(
     unprocessedCommits.map((commit) => {
       return summariseCommit(githubUrl, commit.commitHash);
@@ -106,7 +109,9 @@ async function filterUnprocessedCommits(
   projectId: string,
   commitHashes: Response[],
 ) {
+  // get all the processed commits from data which already processed
   const processedCommits = await db.commit.findMany({ where: { projectId } });
+  // now if the commit hashes coming from the getfetch api from the api is there then we ignore the hashes which are same
   const unprocessedCommits = commitHashes.filter(
     (commit) =>
       !processedCommits.some(
